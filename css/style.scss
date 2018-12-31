@@ -1,0 +1,500 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+$color-primary: #333;
+$height-footer: 2.5rem;
+$shadow: 0px 6px 12px 0px rgba(43, 1, 13, 0.2);
+$shadow-2: 0px 6px 12px 0px rgba(43, 1, 13, 0.7);
+
+$padding: 1rem;
+
+$mobile: 568px;
+
+$colors: (
+  primary-color: $color-primary,
+  secondary-color: #f4f4f4,
+  primary-light: #ccc,
+  accent-color: rgba(177, 24, 4, 0.801),
+  text-color: #fff,
+  primary-dark: darken($color-primary, 40%)
+);
+@function color($color-name) {
+  @return map-get($map: $colors, $key: $color-name);
+}
+
+@mixin mobile {
+  @media (max-width: #{$mobile}) {
+    @content;
+  }
+}
+@mixin mobile-horizontal {
+  @media (max-height: #{$mobile}) {
+    @content;
+  }
+}
+@mixin desktop {
+  @media (min-width: #{$mobile}) {
+    @content;
+  }
+}
+
+html,
+body {
+  font-size: 1rem;
+  height: 100%;
+}
+
+body {
+  font-family: "Roboto", sans-serif, Arial, Helvetica;
+  background-color: color(secondary-color);
+
+  .page-content {
+    min-height: 100%;
+    // mismo margen que el footer
+    margin-bottom: -$height-footer;
+  }
+
+  .page-content::after {
+    content: "";
+    display: block;
+  }
+  footer,
+  .page-content::after {
+    height: $height-footer;
+  }
+
+  footer {
+    text-align: center;
+    padding: 0.5rem;
+    background-color: color(primary-color);
+    color: color(text-color);
+    font-family: "Charm", cursive;
+    a {
+      text-decoration: none;
+      color: color(text-color);
+    }
+  }
+  @include mobile {
+    footer {
+      font-size: 0.8rem;
+    }
+  }
+
+  header {
+    min-height: 8vh;
+  }
+  .navbar {
+    background-color: color(primary-color);
+    overflow: hidden;
+    -webkit-box-shadow: $shadow;
+    -moz-box-shadow: $shadow;
+    box-shadow: $shadow;
+
+    @include desktop {
+      .open-slide {
+        display: none;
+      }
+    }
+
+    @include mobile {
+      .navbar-nav {
+        display: none;
+      }
+    }
+
+    a {
+      img {
+        padding: 0.5rem;
+        margin-right: 1rem;
+        margin-left: 0.5rem;
+        float: left;
+        height: 8vh;
+      }
+      @include mobile-horizontal {
+        img {
+          height: 55px;
+        }
+      }
+    }
+
+    ul {
+      padding: 0 2rem;
+      list-style: none;
+      a {
+        float: left;
+        display: block;
+        text-decoration: none;
+        color: color(text-color);
+        text-align: center;
+        padding: 1.1rem 0.7rem;
+        text-transform: uppercase;
+        font-size: 1.1rem;
+      }
+      a:hover {
+        background-color: color(secondary-color);
+        color: color(primary-color);
+      }
+    }
+    .active {
+      background-color: color(primary-light);
+      color: color(primary-dark);
+    }
+
+    .open-slide {
+      a {
+        float: left;
+        display: block;
+        text-decoration: none;
+        color: color(text-color);
+        text-align: center;
+        padding: 1rem 0.7rem;
+        text-transform: uppercase;
+        font-size: 1.1rem;
+      }
+      a:hover {
+        background-color: color(secondary-color);
+        color: color(accent-color);
+      }
+    }
+  }
+
+  .share-buttons {
+    padding: 0 0.5rem;
+    display: flex;
+    float: right;
+    .share {
+      padding: 1rem 0.5rem;
+      text-transform: capitalize;
+      background-color: color(primary-color);
+      color: color(text-color);
+      border: none;
+    }
+  }
+
+  .side-nav {
+    height: 0%;
+    text-transform: uppercase;
+    width: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: color(primary-color);
+    opacity: 0.95;
+    overflow-y: hidden;
+    transition: 0.5s;
+
+    a {
+      padding: 1.5rem 0.7rem;
+      text-decoration: none;
+      font-size: 1.4rem;
+      color: color(text-color);
+      display: block;
+      transition: 0.3s;
+    }
+
+    a:hover {
+      color: color(accent-color);
+    }
+
+    .btn-close {
+      position: absolute;
+      top: 0;
+      right: 1.5rem;
+      font-size: 2.5rem;
+      margin-left: 3.5rem;
+    }
+  }
+}
+
+.content {
+  height: 92vh;
+  min-height: 92vh;
+  opacity: 0.9;
+  background-image: url("../img/develop.jpeg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+  background-attachment: fixed;
+  font-family: "Charm", cursive;
+  p {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    color: color(text-color);
+    a {
+      text-decoration: none;
+      color: color(text-color);
+    }
+  }
+}
+@include mobile-horizontal {
+  .content {
+    height: 86vh;
+  }
+}
+
+main {
+  color: color(primary-color);
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-areas: "article aside";
+  grid-gap: 0.5rem;
+  article {
+    grid-area: article;
+    padding: 0.3rem;
+  }
+  aside {
+    grid-area: aside;
+    padding: 0.3rem;
+  }
+  h1 {
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .section {
+    padding: 0.3rem;
+    display: grid;
+    grid-gap: 0.5rem;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: "showcase showcase paragraph";
+    .showcase {
+      grid-area: showcase;
+      margin: auto;
+      padding: 0.3rem;
+      img {
+        width: 95%;
+      }
+    }
+    .paragraph {
+      grid-area: paragraph;
+      margin: 0.5rem;
+      padding: 1rem 0.5rem;
+      box-shadow: $shadow;
+      h1 {
+        text-align: center;
+        text-transform: uppercase;
+        padding-bottom: 0.5rem;
+      }
+      h5 {
+        text-transform: capitalize;
+        padding: 0.5rem;
+      }
+      p {
+        padding: 0.3rem;
+      }
+    }
+  }
+  @include mobile {
+    .section {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "showcase"
+        "paragraph";
+    }
+  }
+
+  @include mobile-horizontal {
+    .section {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "showcase"
+        "paragraph";
+    }
+  }
+}
+@include mobile {
+  main {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "article"
+      "aside";
+  }
+}
+
+.tweet {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+blockquote {
+  display: block;
+  border: none;
+}
+
+.twitter-tweet {
+  width: 90% !important;
+}
+
+.image-container {
+  padding: 0 1rem;
+  margin: auto;
+  width: 90%;
+  text-align: center;
+  h1 {
+    text-transform: uppercase;
+  }
+  img {
+    padding: 0.1rem;
+    margin: 0.5rem 0;
+  }
+  .img-small {
+    box-shadow: $shadow-2;
+    height: 10vh;
+    border-radius: 12%;
+  }
+  .img-large {
+    box-shadow: $shadow;
+    width: 94%;
+  }
+}
+
+.social {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+
+  .redes {
+    margin: auto;
+    text-align: center;
+    background-color: color(primary-color);
+    color: color(text-color);
+    padding: 1.5rem 2rem;
+    a {
+      text-decoration: none;
+      color: color(text-color);
+    }
+  }
+}
+.form {
+  background-color: color(primary-color);
+  padding: 1rem;
+  margin: 1rem auto;
+  width: 70%;
+  text-align: center;
+  box-shadow: $shadow;
+  h3 {
+    color: color(text-color);
+    text-align: center;
+    text-transform: uppercase;
+  }
+  input {
+    padding: 0.4rem 0px;
+    border: none;
+    transition: all 0.8s ease-in-out;
+    width: 60%;
+    border-radius: 50px;
+  }
+  input[type="text" i] {
+    margin: 1rem auto;
+    padding: 0.4rem 10px;
+    height: 2.5rem;
+  }
+  input[type="text" i]:focus {
+    width: 90%;
+    font-family: "Roboto", sans-serif, Arial, Helvetica;
+    border-radius: 10px;
+    outline-width: 0;
+  }
+  textarea {
+    width: 60%;
+    border: none;
+    padding: 0.5rem 10px;
+    border-radius: 10px;
+    font-family: "Roboto", sans-serif, Arial, Helvetica;
+    transition: all 0.8s ease-in-out;
+  }
+  textarea:focus {
+    width: 90%;
+    border-radius: 5px;
+    outline-width: 0;
+  }
+  button {
+    border: none;
+    margin: 1rem auto;
+    background-color: rgba(88, 197, 248, 0.945);
+    color: color(primary-color);
+    width: 60%;
+    padding: 0.4rem 10px;
+    border-radius: 50px;
+    font-family: "Charm", cursive;
+    font-size: 1rem;
+    transition: all 0.8s ease-in-out;
+  }
+  button:hover {
+    width: 90%;
+    color: color(primary-color);
+    background-color: color(text-color);
+    border-radius: 10px;
+  }
+}
+@include mobile {
+  .form {
+    width: 90%;
+    input {
+      width: 80%;
+    }
+    textarea {
+      width: 80%;
+    }
+    button {
+      width: 80%;
+    }
+  }
+}
+.parallax {
+  width: 100%;
+  min-height: 92vh;
+  background-attachment: fixed;
+  background-image: url("../img/work-2.jpeg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  .text {
+    color: color(primary-light);
+    position: absolute;
+    top: 27%;
+    left: 0;
+    padding: 1rem;
+    background-color: rgba(51, 51, 51, 0.7);
+    width: 60%;
+    box-shadow: $shadow;
+    border-radius: 0 50px 50px 0;
+    transition: all 0.5s ease-in-out;
+  }
+  .text:hover {
+    background-color: rgba(51, 51, 51, 0.9);
+    width: 90%;
+    border-radius: 0 10px 10px 0;
+    color: color(text-color);
+  }
+  h1 {
+    text-align: center;
+    text-transform: uppercase;
+    padding: 1rem;
+  }
+  h2 {
+    text-transform: capitalize;
+    padding: 0.3rem 0;
+  }
+  p {
+    font-size: 1.1rem;
+  }
+  @include mobile {
+    .text {
+      width: 100%;
+      border-radius: 0;
+    }
+    .text:hover {
+      width: 100%;
+      border-radius: 0;
+    }
+  }
+}
